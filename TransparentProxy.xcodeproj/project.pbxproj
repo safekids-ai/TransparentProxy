@@ -11,31 +11,42 @@
 		04A7A4C12643AE450062DE97 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7A4C02643AE450062DE97 /* ViewController.swift */; };
 		04A7A4C32643AE480062DE97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A7A4C22643AE480062DE97 /* Assets.xcassets */; };
 		04A7A4C62643AE480062DE97 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04A7A4C42643AE480062DE97 /* Main.storyboard */; };
-		04A7A4D62643AE730062DE97 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A7A4D52643AE730062DE97 /* NetworkExtension.framework */; };
-		04A7A4D92643AE730062DE97 /* AppProxyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7A4D82643AE730062DE97 /* AppProxyProvider.swift */; };
-		04A7A4DE2643AE730062DE97 /* TransparentProxyProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 04A7A4D32643AE730062DE97 /* TransparentProxyProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		04A7A4F42643C9AB0062DE97 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A7A4D52643AE730062DE97 /* NetworkExtension.framework */; };
+		04A7A4F72643C9AB0062DE97 /* AppProxyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7A4F62643C9AB0062DE97 /* AppProxyProvider.swift */; };
+		04A7A4F92643C9AB0062DE97 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7A4F82643C9AB0062DE97 /* main.swift */; };
+		04A7A4FE2643C9AB0062DE97 /* ai.safekids.extensions.TransparentProxy.TransparentProxyExtension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 04A7A4F32643C9AB0062DE97 /* ai.safekids.extensions.TransparentProxy.TransparentProxyExtension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		04A7A4DC2643AE730062DE97 /* PBXContainerItemProxy */ = {
+		04A7A4FC2643C9AB0062DE97 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 04A7A4B32643AE450062DE97 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 04A7A4D22643AE730062DE97;
-			remoteInfo = TransparentProxyProvider;
+			remoteGlobalIDString = 04A7A4F22643C9AB0062DE97;
+			remoteInfo = TransparentProxyExtension;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		04A7A4E22643AE730062DE97 /* Embed App Extensions */ = {
+		04A7A4EC2643C7F70062DE97 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				04A7A4DE2643AE730062DE97 /* TransparentProxyProvider.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04A7A5022643C9AB0062DE97 /* Embed System Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(SYSTEM_EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				04A7A4FE2643C9AB0062DE97 /* ai.safekids.extensions.TransparentProxy.TransparentProxyExtension.systemextension in Embed System Extensions */,
+			);
+			name = "Embed System Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -48,11 +59,12 @@
 		04A7A4C52643AE480062DE97 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04A7A4C72643AE480062DE97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04A7A4C82643AE480062DE97 /* TransparentProxy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TransparentProxy.entitlements; sourceTree = "<group>"; };
-		04A7A4D32643AE730062DE97 /* TransparentProxyProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TransparentProxyProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A7A4D52643AE730062DE97 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
-		04A7A4D82643AE730062DE97 /* AppProxyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppProxyProvider.swift; sourceTree = "<group>"; };
-		04A7A4DA2643AE730062DE97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04A7A4DB2643AE730062DE97 /* TransparentProxyProvider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TransparentProxyProvider.entitlements; sourceTree = "<group>"; };
+		04A7A4F32643C9AB0062DE97 /* ai.safekids.extensions.TransparentProxy.TransparentProxyExtension.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = ai.safekids.extensions.TransparentProxy.TransparentProxyExtension.systemextension; sourceTree = BUILT_PRODUCTS_DIR; };
+		04A7A4F62643C9AB0062DE97 /* AppProxyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppProxyProvider.swift; sourceTree = "<group>"; };
+		04A7A4F82643C9AB0062DE97 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		04A7A4FA2643C9AB0062DE97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04A7A4FB2643C9AB0062DE97 /* TransparentProxyExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TransparentProxyExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,11 +75,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		04A7A4D02643AE730062DE97 /* Frameworks */ = {
+		04A7A4F02643C9AB0062DE97 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04A7A4D62643AE730062DE97 /* NetworkExtension.framework in Frameworks */,
+				04A7A4F42643C9AB0062DE97 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,7 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				04A7A4BD2643AE450062DE97 /* TransparentProxy */,
-				04A7A4D72643AE730062DE97 /* TransparentProxyProvider */,
+				04A7A4F52643C9AB0062DE97 /* TransparentProxyExtension */,
 				04A7A4D42643AE730062DE97 /* Frameworks */,
 				04A7A4BC2643AE450062DE97 /* Products */,
 			);
@@ -88,7 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				04A7A4BB2643AE450062DE97 /* TransparentProxy.app */,
-				04A7A4D32643AE730062DE97 /* TransparentProxyProvider.appex */,
+				04A7A4F32643C9AB0062DE97 /* ai.safekids.extensions.TransparentProxy.TransparentProxyExtension.systemextension */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,14 +126,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		04A7A4D72643AE730062DE97 /* TransparentProxyProvider */ = {
+		04A7A4F52643C9AB0062DE97 /* TransparentProxyExtension */ = {
 			isa = PBXGroup;
 			children = (
-				04A7A4D82643AE730062DE97 /* AppProxyProvider.swift */,
-				04A7A4DA2643AE730062DE97 /* Info.plist */,
-				04A7A4DB2643AE730062DE97 /* TransparentProxyProvider.entitlements */,
+				04A7A4F62643C9AB0062DE97 /* AppProxyProvider.swift */,
+				04A7A4F82643C9AB0062DE97 /* main.swift */,
+				04A7A4FA2643C9AB0062DE97 /* Info.plist */,
+				04A7A4FB2643C9AB0062DE97 /* TransparentProxyExtension.entitlements */,
 			);
-			path = TransparentProxyProvider;
+			path = TransparentProxyExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,34 +147,35 @@
 				04A7A4B72643AE450062DE97 /* Sources */,
 				04A7A4B82643AE450062DE97 /* Frameworks */,
 				04A7A4B92643AE450062DE97 /* Resources */,
-				04A7A4E22643AE730062DE97 /* Embed App Extensions */,
+				04A7A4EC2643C7F70062DE97 /* Embed App Extensions */,
+				04A7A5022643C9AB0062DE97 /* Embed System Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				04A7A4DD2643AE730062DE97 /* PBXTargetDependency */,
+				04A7A4FD2643C9AB0062DE97 /* PBXTargetDependency */,
 			);
 			name = TransparentProxy;
 			productName = TransparentProxy;
 			productReference = 04A7A4BB2643AE450062DE97 /* TransparentProxy.app */;
 			productType = "com.apple.product-type.application";
 		};
-		04A7A4D22643AE730062DE97 /* TransparentProxyProvider */ = {
+		04A7A4F22643C9AB0062DE97 /* TransparentProxyExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 04A7A4DF2643AE730062DE97 /* Build configuration list for PBXNativeTarget "TransparentProxyProvider" */;
+			buildConfigurationList = 04A7A4FF2643C9AB0062DE97 /* Build configuration list for PBXNativeTarget "TransparentProxyExtension" */;
 			buildPhases = (
-				04A7A4CF2643AE730062DE97 /* Sources */,
-				04A7A4D02643AE730062DE97 /* Frameworks */,
-				04A7A4D12643AE730062DE97 /* Resources */,
+				04A7A4EF2643C9AB0062DE97 /* Sources */,
+				04A7A4F02643C9AB0062DE97 /* Frameworks */,
+				04A7A4F12643C9AB0062DE97 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = TransparentProxyProvider;
-			productName = TransparentProxyProvider;
-			productReference = 04A7A4D32643AE730062DE97 /* TransparentProxyProvider.appex */;
-			productType = "com.apple.product-type.app-extension";
+			name = TransparentProxyExtension;
+			productName = TransparentProxyExtension;
+			productReference = 04A7A4F32643C9AB0062DE97 /* ai.safekids.extensions.TransparentProxy.TransparentProxyExtension.systemextension */;
+			productType = "com.apple.product-type.system-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -175,7 +189,7 @@
 					04A7A4BA2643AE450062DE97 = {
 						CreatedOnToolsVersion = 12.4;
 					};
-					04A7A4D22643AE730062DE97 = {
+					04A7A4F22643C9AB0062DE97 = {
 						CreatedOnToolsVersion = 12.4;
 					};
 				};
@@ -194,7 +208,7 @@
 			projectRoot = "";
 			targets = (
 				04A7A4BA2643AE450062DE97 /* TransparentProxy */,
-				04A7A4D22643AE730062DE97 /* TransparentProxyProvider */,
+				04A7A4F22643C9AB0062DE97 /* TransparentProxyExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -209,7 +223,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		04A7A4D12643AE730062DE97 /* Resources */ = {
+		04A7A4F12643C9AB0062DE97 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -228,21 +242,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		04A7A4CF2643AE730062DE97 /* Sources */ = {
+		04A7A4EF2643C9AB0062DE97 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04A7A4D92643AE730062DE97 /* AppProxyProvider.swift in Sources */,
+				04A7A4F92643C9AB0062DE97 /* main.swift in Sources */,
+				04A7A4F72643C9AB0062DE97 /* AppProxyProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		04A7A4DD2643AE730062DE97 /* PBXTargetDependency */ = {
+		04A7A4FD2643C9AB0062DE97 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 04A7A4D22643AE730062DE97 /* TransparentProxyProvider */;
-			targetProxy = 04A7A4DC2643AE730062DE97 /* PBXContainerItemProxy */;
+			target = 04A7A4F22643C9AB0062DE97 /* TransparentProxyExtension */;
+			targetProxy = 04A7A4FC2643C9AB0062DE97 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -417,43 +432,43 @@
 			};
 			name = Release;
 		};
-		04A7A4E02643AE730062DE97 /* Debug */ = {
+		04A7A5002643C9AB0062DE97 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = TransparentProxyProvider/TransparentProxyProvider.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TransparentProxyExtension/TransparentProxyExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 79X88LDL88;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = TransparentProxyProvider/Info.plist;
+				INFOPLIST_FILE = TransparentProxyExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = ai.safekids.extensions.TransparentProxy.TransparentProxyProvider;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = ai.safekids.extensions.TransparentProxy.TransparentProxyExtension;
+				PRODUCT_NAME = "$(inherited)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		04A7A4E12643AE730062DE97 /* Release */ = {
+		04A7A5012643C9AB0062DE97 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = TransparentProxyProvider/TransparentProxyProvider.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TransparentProxyExtension/TransparentProxyExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 79X88LDL88;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = TransparentProxyProvider/Info.plist;
+				INFOPLIST_FILE = TransparentProxyExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = ai.safekids.extensions.TransparentProxy.TransparentProxyProvider;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = ai.safekids.extensions.TransparentProxy.TransparentProxyExtension;
+				PRODUCT_NAME = "$(inherited)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -480,11 +495,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		04A7A4DF2643AE730062DE97 /* Build configuration list for PBXNativeTarget "TransparentProxyProvider" */ = {
+		04A7A4FF2643C9AB0062DE97 /* Build configuration list for PBXNativeTarget "TransparentProxyExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				04A7A4E02643AE730062DE97 /* Debug */,
-				04A7A4E12643AE730062DE97 /* Release */,
+				04A7A5002643C9AB0062DE97 /* Debug */,
+				04A7A5012643C9AB0062DE97 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
