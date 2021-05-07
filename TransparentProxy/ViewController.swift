@@ -20,6 +20,8 @@ class ViewController: NSViewController {
     
     var status: Status = .stopped
     
+    let manager = NETransparentProxyManager.shared()
+    
     // Get the Bundle of the system extension.
     lazy var extensionBundle: Bundle = {
 
@@ -58,15 +60,6 @@ class ViewController: NSViewController {
     
 
     @IBAction func startProxy(_ sender: Any) {
-        let manager = NETransparentProxyManager.shared()
-        
-        status = .indeterminate
-        
-        guard !manager.isEnabled else {
-            status = .running
-            return
-        }
-
         guard let extensionIdentifier = extensionBundle.bundleIdentifier else {
             self.status = .stopped
             return
@@ -79,89 +72,46 @@ class ViewController: NSViewController {
     }
     
     @IBAction func stopProxy(_ sender: Any) {
-        let manager = NETransparentProxyManager.shared()
-
-        status = .indeterminate
-
-        guard manager.isEnabled else {
-            status = .stopped
-            return
-        }
-
-        loadConfiguration { success in
-            guard success else {
-                self.status = .running
-                return
-            }
-
-            manager.isEnabled = false
-            manager.saveToPreferences { saveError in
-                DispatchQueue.main.async {
-                    if let error = saveError {
-                        os_log("Failed to disable configuration: %@", error.localizedDescription)
-                        self.status = .running
-                        return
-                    }
-
-                    self.status = .stopped
-                }
-            }
+        
+        loadAndUpdatePreferences {
+            [weak self] in
+            self?.manager.isEnabled = false
         }
     }
     
-    func loadConfiguration(completionHandler: @escaping (Bool) -> Void) {
+    private func loadAndUpdatePreferences(_ completion: @escaping () -> Void) {
+        manager.loadFromPreferences { [weak self] error in
+            guard error == nil else {
+                os_log("load error: %@", error!.localizedDescription)
+                return
+            }
 
-        NETransparentProxyManager.shared().loadFromPreferences { loadError in
-            DispatchQueue.main.async {
-                var success = true
-                if let error = loadError {
-                    os_log("Failed to load configuration: %@", error.localizedDescription)
-                    success = false
+            completion()
+
+            self?.manager.saveToPreferences { (error) in
+                guard error == nil else {
+                    os_log("save error: %@", error!.localizedDescription)
+                    return
                 }
-                completionHandler(success)
+
+                os_log("saved")
             }
         }
     }
-
     
     func enableConfiguration() {
-
-        let manager = NETransparentProxyManager.shared()
-
-        guard !manager.isEnabled else {
-            os_log("Already enabled")
-            status = .running
-            return
-        }
-
-        loadConfiguration { success in
-
-            guard success else {
-                self.status = .stopped
-                return
-            }
-
+        loadAndUpdatePreferences {
+            [weak self] in
+            
             let config = NETunnelProviderProtocol()
-            config.providerBundleIdentifier = self.extensionBundle.bundleIdentifier
-            config.providerConfiguration = ["listen-ports": ["80", "443"]]
+            config.providerBundleIdentifier = self?.extensionBundle.bundleIdentifier
+            config.providerConfiguration = [:]
+            config.serverAddress = "127.0.0.1"
 
-            manager.protocolConfiguration = config
-            
-//            manager.protocolConfiguration = nil
-            
-            manager.isEnabled = true
+            self?.manager.localizedDescription = "transparent proxy"
+            self?.manager.protocolConfiguration = config
 
-            manager.saveToPreferences { saveError in
-                DispatchQueue.main.async {
-                    if let error = saveError {
-                        os_log("Failed to enable configuration: %@", error.localizedDescription)
-                        self.status = .stopped
-                        return
-                    }
-
-                    self.status = .running
-                }
-            }
+            self?.manager.isEnabled = true
         }
     }
 }
@@ -173,7 +123,7 @@ extension ViewController: OSSystemExtensionRequestDelegate {
 
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
 
-        os_log("Requst completed with resutl: %d", result.rawValue)
+        os_log("Request completed with result: %d", result.rawValue)
         
         guard result == .completed else {
             os_log("Unexpected result %d for system extension request", result.rawValue)

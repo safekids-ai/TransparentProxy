@@ -14,6 +14,8 @@ class AppProxyProvider: NETransparentProxyProvider {
     override func startProxy(options: [String : Any]?, completionHandler: @escaping (Error?) -> Void) {
         // Add code here to start the process of connecting the tunnel.
         
+        os_log("startProxy")
+        
         let networkRules = ["443","80"].map { port -> NENetworkRule in
             let remoteNetwork = NWHostEndpoint(hostname: "0.0.0.0", port: port)
             
@@ -25,7 +27,7 @@ class AppProxyProvider: NETransparentProxyProvider {
                                                    direction: .outbound)
         }
 
-        let proxySettings = NETransparentProxyNetworkSettings()
+        let proxySettings = NETransparentProxyNetworkSettings(tunnelRemoteAddress: "127.0.0.1")
         proxySettings.includedNetworkRules = networkRules
         
         setTunnelNetworkSettings(proxySettings) { error in
@@ -38,6 +40,7 @@ class AppProxyProvider: NETransparentProxyProvider {
     
     override func stopProxy(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         // Add code here to start the process of stopping the tunnel.
+        os_log("stopProxy")
         completionHandler()
     }
     
@@ -58,7 +61,18 @@ class AppProxyProvider: NETransparentProxyProvider {
     }
     
     override func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {
-        // Add code here to handle the incoming flow.
-        return false
+        if let tcpflow = flow as? NEAppProxyTCPFlow
+        {
+            os_log("tcpflow handled - %{public}@",tcpflow.metaData.debugDescription)
+        }
+        else if let udpflow = flow as? NEAppProxyUDPFlow
+        {
+            os_log("udpflow handled - %{public}@", udpflow.metaData.debugDescription)
+        }
+        else
+        {
+            os_log("flow handled - %{public}@",flow.metaData.debugDescription)
+        }
+        return true
     }
 }
