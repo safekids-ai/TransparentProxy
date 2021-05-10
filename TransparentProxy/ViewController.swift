@@ -20,7 +20,7 @@ class ViewController: NSViewController {
     
     var status: Status = .stopped
     
-    let manager = NETransparentProxyManager.shared()
+//    let manager = NETransparentProxyManager.shared()
     
     // Get the Bundle of the system extension.
     lazy var extensionBundle: Bundle = {
@@ -50,6 +50,8 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+//        clearPreferences()
+//        startTunnel()
     }
 
     override var representedObject: Any? {
@@ -60,6 +62,30 @@ class ViewController: NSViewController {
     
 
     @IBAction func startProxy(_ sender: Any) {
+        startTunnel()
+    }
+    
+    @IBAction func stopProxy(_ sender: Any) {
+        stopTunnel()
+    }
+    
+    @IBAction func clear(_ sender: Any) {
+        clearPreferences()
+    }
+    
+    @IBAction func enable(_ sender: Any) {
+        enableConfiguration()
+    }
+    
+    @IBAction func disable(_ sender: Any) {
+        let manager = NETransparentProxyManager()
+        loadAndUpdatePreferences(using: manager) {
+            manager in
+            manager.isEnabled = false
+        }
+    }
+    
+    @IBAction func initialize(_ sender: Any) {
         guard let extensionIdentifier = extensionBundle.bundleIdentifier else {
             self.status = .stopped
             return
@@ -71,24 +97,18 @@ class ViewController: NSViewController {
         OSSystemExtensionManager.shared.submitRequest(activationRequest)
     }
     
-    @IBAction func stopProxy(_ sender: Any) {
-        
-        loadAndUpdatePreferences {
-            [weak self] in
-            self?.manager.isEnabled = false
-        }
-    }
-    
-    private func loadAndUpdatePreferences(_ completion: @escaping () -> Void) {
-        manager.loadFromPreferences { [weak self] error in
+    private func loadAndUpdatePreferences(using manager: NETransparentProxyManager, _ completionHandler: @escaping (NETransparentProxyManager) -> Void) {
+        manager.loadFromPreferences { error in
             guard error == nil else {
                 os_log("load error: %@", error!.localizedDescription)
                 return
             }
 
-            completion()
+//            os_log("calling completionHandler")
+            completionHandler(manager)
+//            os_log("completionHandler returned")
 
-            self?.manager.saveToPreferences { (error) in
+            manager.saveToPreferences { (error) in
                 guard error == nil else {
                     os_log("save error: %@", error!.localizedDescription)
                     return
@@ -99,9 +119,26 @@ class ViewController: NSViewController {
         }
     }
     
-    private func startTunnel() {
-        NETransparentProxyManager.loadAllFromPreferences() { (managers, error) in
+    private func clearPreferences(){
+        NETransparentProxyManager.loadAllFromPreferences{ (managers, error) in
 
+            guard error == nil else {
+                os_log("load error: %@", error!.localizedDescription)
+                return
+            }
+            for manager in managers ?? [] {
+                manager.removeFromPreferences(completionHandler: nil)
+            }
+        }
+    }
+    private func startTunnel() {
+        NETransparentProxyManager.loadAllFromPreferences{ (managers, error) in
+
+            guard error == nil else {
+                os_log("load error: %@", error!.localizedDescription)
+                return
+            }
+            
             for manager in managers ?? [] {
                 os_log("startTunnel: manager %@", manager)
                 do{
@@ -113,22 +150,35 @@ class ViewController: NSViewController {
             }
         }
     }
-    
+    private func stopTunnel() {
+        NETransparentProxyManager.loadAllFromPreferences{ (managers, error) in
+
+            guard error == nil else {
+                os_log("load error: %@", error!.localizedDescription)
+                return
+            }
+            
+            for manager in managers ?? [] {
+                os_log("startTunnel: manager %@", manager)
+                manager.connection.stopVPNTunnel()
+            }
+        }
+    }
     func enableConfiguration() {
-        loadAndUpdatePreferences {
-            [weak self] in
+        let manager = NETransparentProxyManager()
+        loadAndUpdatePreferences(using: manager){
+            manager in
             
             let config = NETunnelProviderProtocol()
-            config.providerBundleIdentifier = self?.extensionBundle.bundleIdentifier
+            config.providerBundleIdentifier = self.extensionBundle.bundleIdentifier
             config.providerConfiguration = [:]
             config.serverAddress = "127.0.0.1"
 
-            self?.manager.localizedDescription = "transparent proxy"
-            self?.manager.protocolConfiguration = config
+            manager.localizedDescription = "proxy"
+            manager.protocolConfiguration = config
 
-            self?.manager.isEnabled = true
+            manager.isEnabled = true
         }
-        startTunnel()
     }
 }
 
@@ -147,7 +197,7 @@ extension ViewController: OSSystemExtensionRequestDelegate {
             return
         }
 
-        enableConfiguration()
+//        enableConfiguration()
     }
 
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {

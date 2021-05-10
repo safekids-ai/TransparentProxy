@@ -73,6 +73,6 @@ class AppProxyProvider: NETransparentProxyProvider {
         {
             os_log("flow handled - %{public}@",flow.metaData.debugDescription)
         }
-        return true
+        return false
     }
 }
