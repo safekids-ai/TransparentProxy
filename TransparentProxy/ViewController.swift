@@ -99,6 +99,21 @@ class ViewController: NSViewController {
         }
     }
     
+    private func startTunnel() {
+        NETransparentProxyManager.loadAllFromPreferences() { (managers, error) in
+
+            for manager in managers ?? [] {
+                os_log("startTunnel: manager %@", manager)
+                do{
+                    try manager.connection.startVPNTunnel(options: [:])
+                }
+                catch{
+                    
+                }
+            }
+        }
+    }
+    
     func enableConfiguration() {
         loadAndUpdatePreferences {
             [weak self] in
@@ -113,6 +128,7 @@ class ViewController: NSViewController {
 
             self?.manager.isEnabled = true
         }
+        startTunnel()
     }
 }
 
