@@ -20,8 +20,6 @@ class ViewController: NSViewController {
     
     var status: Status = .stopped
     
-//    let manager = NETransparentProxyManager.shared()
-    
     // Get the Bundle of the system extension.
     lazy var extensionBundle: Bundle = {
 
@@ -50,8 +48,6 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        clearPreferences()
-//        startTunnel()
     }
 
     override var representedObject: Any? {
@@ -104,9 +100,7 @@ class ViewController: NSViewController {
                 return
             }
 
-//            os_log("calling completionHandler")
             completionHandler(manager)
-//            os_log("completionHandler returned")
 
             manager.saveToPreferences { (error) in
                 guard error == nil else {
@@ -171,8 +165,8 @@ class ViewController: NSViewController {
             
             let config = NETunnelProviderProtocol()
             config.providerBundleIdentifier = self.extensionBundle.bundleIdentifier
-            config.providerConfiguration = [:]
-            config.serverAddress = "127.0.0.1"
+            config.providerConfiguration = ["ports": ["80", "443"]]
+            config.serverAddress = "http://127.0.0.1:8080"
 
             manager.localizedDescription = "proxy"
             manager.protocolConfiguration = config

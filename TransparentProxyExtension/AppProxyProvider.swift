@@ -14,9 +14,25 @@ class AppProxyProvider: NETransparentProxyProvider {
     override func startProxy(options: [String : Any]?, completionHandler: @escaping (Error?) -> Void) {
         // Add code here to start the process of connecting the tunnel.
         
-        os_log("startProxy")
+        /*
+         {
+             AuthMethod = Password;
+             ServerAddress = "http://127.0.0.1:8080";
+             VendorData =     {
+                 ports =         (
+                     80,
+                     443
+                 );
+             };
+         }
+         */
         
-        let networkRules = ["443","80"].map { port -> NENetworkRule in
+        os_log("startProxy options: %{public}@", options as! CVarArg)
+        
+        let vendorData = options?["VendorData"] as? Dictionary<String, Any>
+        let ports = vendorData?["ports"] as! [String]
+        
+        let networkRules = ports.map { port -> NENetworkRule in
             let remoteNetwork = NWHostEndpoint(hostname: "0.0.0.0", port: port)
             
             return NENetworkRule(remoteNetwork: remoteNetwork,
@@ -64,6 +80,7 @@ class AppProxyProvider: NETransparentProxyProvider {
         if let tcpflow = flow as? NEAppProxyTCPFlow
         {
             os_log("tcpflow handled - %{public}@",tcpflow.metaData.debugDescription)
+            os_log("tcpflow remoteEndpoint - %{public}@",tcpflow.remoteEndpoint)
         }
         else if let udpflow = flow as? NEAppProxyUDPFlow
         {
@@ -73,6 +90,6 @@ class AppProxyProvider: NETransparentProxyProvider {
         {
             os_log("flow handled - %{public}@",flow.metaData.debugDescription)
         }
-        return false
+        return true
     }
 }
