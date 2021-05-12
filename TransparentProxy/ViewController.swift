@@ -93,6 +93,29 @@ class ViewController: NSViewController {
         OSSystemExtensionManager.shared.submitRequest(activationRequest)
     }
     
+    @IBAction func getInfo(_ sender: Any) {
+        NETransparentProxyManager.loadAllFromPreferences{ (managers, error) in
+
+            guard error == nil else {
+                os_log("load error: %@", error!.localizedDescription)
+                return
+            }
+            for manager in managers ?? [] {
+                let session = manager.connection as! NETunnelProviderSession
+                let request = "get_mapping".data(using: String.Encoding.utf8)
+                do{
+                    try session.sendProviderMessage(request!){ (response: Data?) in
+                        guard let responseString = String(data: response ?? Data(), encoding: String.Encoding.utf8) else {
+                                    return
+                                }
+                        os_log("response: %@", responseString)
+                    }
+                }
+                catch{}
+            }
+        }
+    }
+    
     private func loadAndUpdatePreferences(using manager: NETransparentProxyManager, _ completionHandler: @escaping (NETransparentProxyManager) -> Void) {
         manager.loadFromPreferences { error in
             guard error == nil else {

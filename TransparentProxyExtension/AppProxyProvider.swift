@@ -63,6 +63,14 @@ class AppProxyProvider: NETransparentProxyProvider {
     
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
         // Add code here to handle the message.
+        
+        guard let messageString = String(data: messageData, encoding: String.Encoding.utf8) else {
+                    completionHandler?(nil)
+                    return
+                }
+        
+        os_log("message data: %{public}@", messageString)
+        
         if let handler = completionHandler {
             handler(messageData)
         }
