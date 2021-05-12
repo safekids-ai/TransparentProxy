@@ -165,7 +165,7 @@ class ViewController: NSViewController {
             
             let config = NETunnelProviderProtocol()
             config.providerBundleIdentifier = self.extensionBundle.bundleIdentifier
-            config.providerConfiguration = ["ports": ["80", "443"]]
+            config.providerConfiguration = ["ports": ["80", "443"], "tunnelRemoteAddress": "127.0.0.1"]
             config.serverAddress = "http://127.0.0.1:8080"
 
             manager.localizedDescription = "proxy"

@@ -31,6 +31,7 @@ class AppProxyProvider: NETransparentProxyProvider {
         
         let vendorData = options?["VendorData"] as? Dictionary<String, Any>
         let ports = vendorData?["ports"] as! [String]
+        let tunnelRemoteAddress = vendorData?["tunnelRemoteAddress"] as! String
         
         let networkRules = ports.map { port -> NENetworkRule in
             let remoteNetwork = NWHostEndpoint(hostname: "0.0.0.0", port: port)
@@ -43,7 +44,7 @@ class AppProxyProvider: NETransparentProxyProvider {
                                                    direction: .outbound)
         }
 
-        let proxySettings = NETransparentProxyNetworkSettings(tunnelRemoteAddress: "127.0.0.1")
+        let proxySettings = NETransparentProxyNetworkSettings(tunnelRemoteAddress: tunnelRemoteAddress)
         proxySettings.includedNetworkRules = networkRules
         
         setTunnelNetworkSettings(proxySettings) { error in
